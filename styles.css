@@ -5,3 +5,19 @@ body {
     font-size: 22px;
     background-color: #2D2E29;
 }
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#map {
+    width: 758px;
+    height: 100%;
+    max-height: 758px;
+    background-color: #98CAFD;
+    border-radius: 5px;
+}
