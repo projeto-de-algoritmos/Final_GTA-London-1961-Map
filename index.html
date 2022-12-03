@@ -8,11 +8,26 @@
             rel="icon"
             href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚓</text></svg>">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
         <script type="module" src="script.js"></script>
     </head>
     <body>
         <div id="container">
+            <div id="menu">
+                <h1 id="title">GTA: London 1969 Map</h1>
+                <h2 id="subtitle">Selecione 2 marcadores e trace a melhor rota!</h2>
+                <div class="info">
+                    <span class="text">Origem:
+                        <span id="from"> - </span>
+                    </span>
+                    <span class="text">Destino:
+                        <span id="to"> - </span>
+                    </span>
+                </div>
+                <span id="route">Traçar Rota</span>
+                <span id="reset">Resetar</span>
+            </div>
             <div id="map"></div>
         </div>
     </body>

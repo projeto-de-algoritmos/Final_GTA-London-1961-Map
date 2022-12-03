@@ -1,21 +1,74 @@
 body {
     margin: 0px;
+    padding: 3rem;
     user-select: none;
     color: white;
     font-size: 22px;
     background-color: #2D2E29;
+    font-family: "Audiowide", sans-serif;
 }
 
 #container {
-    width: 100vw;
-    height: 100vh;
+    width: calc(100vw - 6rem);
+    height: calc(100vh - 6rem);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
+#menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 35%;
+}
+
+#title {
+    font-size: 2.3rem;
+    margin: 0;
+}
+
+#subtitle {
+    font-size: 1.3rem;
+    color: lightgray;
+    margin: 1.5rem 1rem;
+}
+
+.info {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.text {
+    font-size: 1.1rem;
+}
+
+#route, #reset {
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 1.1rem;
+    padding: 0.3rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid white;
+}
+
+#route:hover,
+#reset:hover {
+    background-color: white;
+    color: #2D2E29;
+    border: 1px solid #2D2E29;
+}
+
+#route {
+    margin-top: 2rem;
+}
+
 #map {
-    width: 758px;
+    width: 60%;
     height: 100%;
     max-height: 758px;
     background-color: #98CAFD;
