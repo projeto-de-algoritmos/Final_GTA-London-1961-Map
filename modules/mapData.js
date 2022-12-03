@@ -98,14 +98,28 @@ const mapData = [
         nodes: [
             {
                 name: 'Restaurante do zezinho',
-                pos: [435, 175],
-                closesIntersection: [null, null]
+                pos: [436, 178],
+                marker: null,
+                closesIntersection: [null, null],
             },
             {
                 name: 'Casa do zezinho',
-                pos: [300, 170],
-                closesIntersection: [null, null]
-            }
+                pos: [297, 171],
+                marker: null,
+                closesIntersection: [null, null],
+            },
+            {
+                name: 'Pier 21',
+                pos: [433, 286],
+                marker: null,
+                closesIntersection: [null, null],
+            },
+            {
+                name: 'Parque da cidade',
+                pos: [190, 100],
+                marker: null,
+                closesIntersection: [null, null],
+            },
             // [179, 128],
             // [240, 128],
             // [179, 161],

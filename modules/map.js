@@ -6,6 +6,15 @@ const map = L.map('map', { crs: L.CRS.Simple });
 const bounds = [[0, 0], [width, height]];
 let from;
 let to;
+const defaultIcon = L.icon({
+    iconUrl: 'assets/black-marker.png',
+    iconSize: [34, 34],
+    iconAnchor: [18, 35],
+});
+const selectedIcon = L.icon({
+    ...defaultIcon,
+    iconUrl: 'assets/red-marker.png',
+});
 
 
 export function init() {
@@ -25,14 +34,14 @@ function loadMapData() {
         L.polyline(value.edges, {color: 'red'}).addTo(map);
 
         value.nodes.forEach(node => {
-            const marker = L.marker(node.pos).addTo(map);
-            addMarkerEvents(marker, node)
+            node.marker = L.marker(node.pos).setIcon(defaultIcon).addTo(map);
+            addMarkerEvents(node);
         })
     })
 }
 
-function addMarkerEvents(marker, node) {
-    marker.addEventListener('mouseover', (el) => {
+function addMarkerEvents(node) {
+    node.marker.addEventListener('mouseover', (el) => {
         L.popup(
             el.latlng,
             {
@@ -56,6 +65,7 @@ function addMarkerEvents(marker, node) {
             to = null;
         }
         setTexts();
+        setMarkersIcon();
     });
 }
 
@@ -75,6 +85,7 @@ function resetRoute() {
     to = null;
     from = null;
     setTexts();
+    setMarkersIcon();
 }
 
 function setTexts() {
@@ -82,4 +93,13 @@ function setTexts() {
     const toEl = document.getElementById("to");
     fromEl.innerText = from?.name || '-';
     toEl.innerText = to?.name || '-';
+}
+
+function setMarkersIcon() {
+    mapData.forEach(value => {
+        value.nodes.forEach(node => {
+            const icon = node.marker === to?.marker || node.marker === from?.marker ? selectedIcon : defaultIcon
+            node.marker.setIcon(icon);
+        });
+    })
 }
