@@ -9,7 +9,12 @@ const mapData = [
             [494, 0]
         ],
         points: [
-
+            {
+                name: 'Casa da joana',
+                pos: [170, 32],
+                marker: null,
+                closestIntersection: [null, null],
+            },
         ],
         nodes: [
             [158, 80],

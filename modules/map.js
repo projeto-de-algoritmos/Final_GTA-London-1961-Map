@@ -1,4 +1,5 @@
 import mapData from './mapData.js';
+import * as graph from './graph.js';
 
 const width = 762;
 const height = 758;
@@ -7,6 +8,8 @@ const bounds = [[0, 0], [width, height]];
 
 let from;
 let to;
+const fromLine = L.polyline([], {color: 'red'}).addTo(map);
+const toLine = L.polyline([], {color: 'red'}).addTo(map);
 
 const defaultIcon = L.icon({
     iconUrl: 'assets/black-marker.png',
@@ -34,16 +37,16 @@ function loadMapImage() {
 function loadMapData() {
     mapData.forEach(value => {
         L.polygon(value.area, {color: 'pink', fill: false}).addTo(map);
-        L.polyline(value.edges, {color: 'red'}).addTo(map);
+        // L.polyline(value.edges, {color: 'red'}).addTo(map);
 
         value.points.forEach(point => {
             point.marker = L.marker(point.pos).setIcon(defaultIcon).addTo(map);
-            addMarkerEvents(point);
+            addMarkerEvents(point, value.district);
         })
     })
 }
 
-function addMarkerEvents(point) {
+function addMarkerEvents(point, district) {
     point.marker.addEventListener('mouseover', (el) => {
         L.popup(
             el.latlng,
@@ -59,13 +62,17 @@ function addMarkerEvents(point) {
     .addEventListener('click', () => {
         if (!from && !to) {
             from = point;
+            fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos, district)]);
         } else if (from && !to && from === point) {
             return window.alert("Selecione dois lugares diferentes!");
         } else if (from && !to) {
             to = point;
+            toLine.setLatLngs([to.pos, graph.getClosestNode(to.pos, district)]);
         } else if (from && to) {
             from = point;
             to = null;
+            fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos, district)]);
+            toLine.setLatLngs([]);
         }
         setTexts();
         setMarkersIcon();
