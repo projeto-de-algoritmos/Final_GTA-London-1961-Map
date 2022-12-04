@@ -20,30 +20,27 @@ export function getAdjacentNodes(node) {
     return adjacentList.get(node.toString());
 }
 
-
 export function getClosestNode([ x, y ]) {
+    const { nodes } = mapData;
     let minDistance = Infinity;
     let minSource;
 
-    mapData.forEach(({ nodes }) => {
-        nodes.forEach(node => {
-            const [targetX, targetY] = node;
-            const distance = Math.abs(targetX - x) + Math.abs(targetY - y);
-            if(distance < minDistance) {
-                minDistance = distance;
-                minSource = node;
-            }
-        });
+    nodes.forEach(node => {
+        const [targetX, targetY] = node;
+        const distance = Math.abs(targetX - x) + Math.abs(targetY - y);
+        if(distance < minDistance) {
+            minDistance = distance;
+            minSource = node;
+        }
     });
 
     return minSource;
 }
 
 function loadGraphData() {
-    mapData.forEach(({ nodes, edges }) => {
-        nodes.forEach(node => addNode(node))
-        edges.forEach(edge => addEdge(edge))
-    });
+    const { nodes, edges } = mapData
+    nodes.forEach(node => addNode(node))
+    edges.forEach(edge => addEdge(edge))
 }
 
 export function findShortestPath(startNode, endNode) {

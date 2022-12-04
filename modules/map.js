@@ -36,14 +36,12 @@ function loadMapImage() {
 }
 
 function loadMapData() {
-    mapData.forEach(({ area, points }) => {
-        L.polygon(area, {color: 'pink', fill: false}).addTo(map);
-        // L.polyline(value.edges, {color: 'red'}).addTo(map);
+    const { area, points } = mapData
+    L.polygon(area, {color: 'yellow', fill: true}).addTo(map);
 
-        points.forEach(point => {
-            point.marker = L.marker(point.pos).setIcon(defaultIcon).addTo(map);
-            addMarkerEvents(point);
-        })
+    points.forEach(point => {
+        point.marker = L.marker(point.pos).setIcon(defaultIcon).addTo(map);
+        addMarkerEvents(point);
     })
 }
 
@@ -61,23 +59,19 @@ function openPopup({ latlng }, { name }) {
 }
 
 function handleSelection(point, reset = false) {
+    fromLine.setLatLngs([]);
+    toLine.setLatLngs([]);
     if(route) map.removeLayer(route);
-    if (reset) {
-        fromLine.setLatLngs([]);
-        toLine.setLatLngs([]);
-    } else if (!from && !to) {
+
+    if (!from && !to) {
         from = point;
-        fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos)]);
     } else if (from && !to && from === point) {
         return window.alert("Selecione dois lugares diferentes!");
     } else if (from && !to) {
         to = point;
-        toLine.setLatLngs([to.pos, graph.getClosestNode(to.pos)]);
     } else if (from && to) {
         from = point;
         to = null;
-        fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos)]);
-        toLine.setLatLngs([]);
     }
     setTexts();
     setMarkersIcon();
@@ -108,7 +102,9 @@ function drawEdges(nodes) {
     for (let i = 0; i < nodes.length - 1; i++) {
         edges.push([nodes[i], nodes[i+1]])
     }
-    route = L.polyline(edges, {color: 'red'}).addTo(map);
+    route = L.polyline(edges, { color: 'red' }).addTo(map);
+    fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos)]);
+    toLine.setLatLngs([to.pos, graph.getClosestNode(to.pos)]);
 }
 
 function resetRoute() {
@@ -125,10 +121,9 @@ function setTexts() {
 }
 
 function setMarkersIcon() {
-    mapData.forEach(({ points }) => {
-        points.forEach( point => {
-            const icon = point === to || point === from ? selectedIcon : defaultIcon
-            point.marker.setIcon(icon);
-        });
-    })
+    const { points } = mapData;
+    points.forEach(point => {
+        const icon = point === to || point === from ? selectedIcon : defaultIcon
+        point.marker.setIcon(icon);
+    });
 }
