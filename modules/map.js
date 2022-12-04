@@ -4,13 +4,16 @@ const width = 762;
 const height = 758;
 const map = L.map('map', { crs: L.CRS.Simple });
 const bounds = [[0, 0], [width, height]];
+
 let from;
 let to;
+
 const defaultIcon = L.icon({
     iconUrl: 'assets/black-marker.png',
     iconSize: [34, 34],
     iconAnchor: [18, 35],
 });
+
 const selectedIcon = L.icon({
     ...defaultIcon,
     iconUrl: 'assets/red-marker.png',
@@ -30,22 +33,22 @@ function loadMapImage() {
 
 function loadMapData() {
     mapData.forEach(value => {
-        const area = L.polygon(value.area, {color: value.colorArea}).addTo(map);
+        L.polygon(value.area, {color: 'pink', fill: false}).addTo(map);
         L.polyline(value.edges, {color: 'red'}).addTo(map);
 
-        value.nodes.forEach(node => {
-            node.marker = L.marker(node.pos).setIcon(defaultIcon).addTo(map);
-            addMarkerEvents(node);
+        value.points.forEach(point => {
+            point.marker = L.marker(point.pos).setIcon(defaultIcon).addTo(map);
+            addMarkerEvents(point);
         })
     })
 }
 
-function addMarkerEvents(node) {
-    node.marker.addEventListener('mouseover', (el) => {
+function addMarkerEvents(point) {
+    point.marker.addEventListener('mouseover', (el) => {
         L.popup(
             el.latlng,
             {
-                content: node.name,
+                content: point.name,
                 offset: L.point(0, -30)
             }
         ).openOn(map);
@@ -53,15 +56,15 @@ function addMarkerEvents(node) {
     .addEventListener('mouseout', () => {
         map.closePopup();
     })
-    .addEventListener('click', (el) => {
+    .addEventListener('click', () => {
         if (!from && !to) {
-            from = node;
-        } else if (from && !to && from === node) {
+            from = point;
+        } else if (from && !to && from === point) {
             return window.alert("Selecione dois lugares diferentes!");
         } else if (from && !to) {
-            to = node;
+            to = point;
         } else if (from && to) {
-            from = node;
+            from = point;
             to = null;
         }
         setTexts();
@@ -97,9 +100,9 @@ function setTexts() {
 
 function setMarkersIcon() {
     mapData.forEach(value => {
-        value.nodes.forEach(node => {
-            const icon = node.marker === to?.marker || node.marker === from?.marker ? selectedIcon : defaultIcon
-            node.marker.setIcon(icon);
+        value.points.forEach(point => {
+            const icon = point.marker === to?.marker || point.marker === from?.marker ? selectedIcon : defaultIcon
+            point.marker.setIcon(icon);
         });
     })
 }
