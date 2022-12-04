@@ -121,6 +121,5 @@ function formatList() {
 function calculateDistance(initPos, targetPos) {
     const [x1, y1] = initPos.split(',');
     const [x2, y2] = targetPos.split(',');
-    const res = Math.abs(x1 - x2 - y1 - y2);
-    return res;
+    return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 }
