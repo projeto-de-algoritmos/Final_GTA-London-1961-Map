@@ -17,54 +17,80 @@ body {
 }
 
 #menu {
+    width: 40%;
+    border: 1px solid white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
-    width: 35%;
+    padding: 2rem;
+    height: calc(100% - 4rem);
 }
 
-#title {
-    font-size: 2.3rem;
+#menu h1 {
+    font-size: 2.5rem;
     margin: 0;
 }
 
-#subtitle {
-    font-size: 1.3rem;
-    color: lightgray;
-    margin: 1.5rem 1rem;
+#menu h2 {
+    font-size: 1rem;
+    color: #98CAFD;
+    margin: 1.5rem 0;
 }
 
-.info {
-    width: 80%;
+#info {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    margin: auto 0;
 }
 
-.text {
-    font-size: 1.1rem;
+#info p {
+    font-size: 1.4rem;
+    margin-top: 2rem;
 }
 
-#route, #reset {
+#info span {
+    color: #98CAFD;
+}
+
+#btns {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+#btns span {
     cursor: pointer;
     background-color: transparent;
+    text-align: center;
     font-size: 1.1rem;
     padding: 0.3rem 1rem;
     margin-bottom: 1rem;
-    border: 1px solid white;
-}
-
-#route:hover,
-#reset:hover {
-    background-color: white;
-    color: #2D2E29;
-    border: 1px solid #2D2E29;
+    width: 30%;
+    max-width: 200px;
 }
 
 #route {
-    margin-top: 2rem;
+    border: 1px solid #98CAFD;
+    color: #98CAFD;
+}
+
+#route:hover {
+    background-color: #98CAFD;
+    color: #2D2E29;
+}
+
+#reset {
+    border: 1px solid #FFCCCC;
+    color: #FFCCCC;
+}
+
+#reset:hover {
+    background-color: #FFCCCC;
+    color: #2D2E29;
 }
 
 #map {
@@ -72,5 +98,5 @@ body {
     height: 100%;
     max-height: 758px;
     background-color: #98CAFD;
-    border-radius: 5px;
+    border: 1px solid white;
 }
