@@ -35,48 +35,50 @@ function loadMapImage() {
 }
 
 function loadMapData() {
-    mapData.forEach(value => {
-        L.polygon(value.area, {color: 'pink', fill: false}).addTo(map);
+    mapData.forEach(({ area, points }) => {
+        L.polygon(area, {color: 'pink', fill: false}).addTo(map);
         // L.polyline(value.edges, {color: 'red'}).addTo(map);
 
-        value.points.forEach(point => {
+        points.forEach(point => {
             point.marker = L.marker(point.pos).setIcon(defaultIcon).addTo(map);
-            addMarkerEvents(point, value.district);
+            addMarkerEvents(point);
         })
     })
 }
 
-function addMarkerEvents(point, district) {
-    point.marker.addEventListener('mouseover', (el) => {
-        L.popup(
-            el.latlng,
-            {
-                content: point.name,
-                offset: L.point(0, -30)
-            }
-        ).openOn(map);
-    })
-    .addEventListener('mouseout', () => {
-        map.closePopup();
-    })
-    .addEventListener('click', () => {
-        if (!from && !to) {
-            from = point;
-            fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos, district)]);
-        } else if (from && !to && from === point) {
-            return window.alert("Selecione dois lugares diferentes!");
-        } else if (from && !to) {
-            to = point;
-            toLine.setLatLngs([to.pos, graph.getClosestNode(to.pos, district)]);
-        } else if (from && to) {
-            from = point;
-            to = null;
-            fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos, district)]);
-            toLine.setLatLngs([]);
-        }
-        setTexts();
-        setMarkersIcon();
-    });
+function addMarkerEvents(point) {
+    point.marker.addEventListener('mouseover', (el) => openPopup(el, point))
+    .addEventListener('mouseout', () => map.closePopup())
+    .addEventListener('click', () => handleSelection(point));
+}
+
+function openPopup({ latlng }, { name }) {
+    L.popup(latlng, {
+        content: name,
+        offset: L.point(0, -30)
+    }).openOn(map);
+}
+
+function handleSelection(point, reset = false) {
+    if (reset) {
+        fromLine.setLatLngs([]);
+        toLine.setLatLngs([]);
+    } else if (!from && !to) {
+        from = point;
+        fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos)]);
+    } else if (from && !to && from === point) {
+        return window.alert("Selecione dois lugares diferentes!");
+    } else if (from && !to) {
+        to = point;
+        toLine.setLatLngs([to.pos, graph.getClosestNode(to.pos)]);
+    } else if (from && to) {
+        from = point;
+        to = null;
+        fromLine.setLatLngs([from.pos, graph.getClosestNode(from.pos)]);
+        toLine.setLatLngs([]);
+    }
+    setTexts();
+    setMarkersIcon();
 }
 
 function listenBtnEvents() {
@@ -94,8 +96,7 @@ function calculateRoute() {
 function resetRoute() {
     to = null;
     from = null;
-    setTexts();
-    setMarkersIcon();
+    handleSelection(null, null, true);
 }
 
 function setTexts() {
@@ -106,9 +107,9 @@ function setTexts() {
 }
 
 function setMarkersIcon() {
-    mapData.forEach(value => {
-        value.points.forEach(point => {
-            const icon = point.marker === to?.marker || point.marker === from?.marker ? selectedIcon : defaultIcon
+    mapData.forEach(({ points }) => {
+        points.forEach( point => {
+            const icon = point === to || point === from ? selectedIcon : defaultIcon
             point.marker.setIcon(icon);
         });
     })

@@ -21,37 +21,27 @@ export function getAdjacentNodes(node) {
 }
 
 
-export function getClosestNode(pos, district) {
-    const [ x, y ] = pos;
+export function getClosestNode([ x, y ]) {
     let minDistance = Infinity;
     let minSource;
 
-    mapData.forEach(value => {
-        if(value.district === district) {
-            value.nodes.forEach(node => {
-                const [targetX, targetY] = node;
-                const distance = Math.abs(targetX-x) + Math.abs(targetY-y);
-                if(distance < minDistance) {
-                    minDistance = distance;
-                    minSource = node;
-                }
-            });
-        }
+    mapData.forEach(({ nodes }) => {
+        nodes.forEach(node => {
+            const [targetX, targetY] = node;
+            const distance = Math.abs(targetX - x) + Math.abs(targetY - y);
+            if(distance < minDistance) {
+                minDistance = distance;
+                minSource = node;
+            }
+        });
     });
 
     return minSource;
 }
 
 function loadGraphData() {
-    mapData.forEach(value => {
-        value.nodes.forEach(node => {
-            addNode(node);
-        })
-    });
-
-    mapData.forEach(value => {
-        value.edges.forEach(edge => {
-            addEdge(edge);
-        })
+    mapData.forEach(({ nodes, edges }) => {
+        nodes.forEach(node => addNode(node))
+        edges.forEach(edge => addEdge(edge))
     });
 }
