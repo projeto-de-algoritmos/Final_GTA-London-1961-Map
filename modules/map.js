@@ -9,7 +9,8 @@ const bounds = [[0, 0], [width, height]];
 let from;
 let to;
 const fromLine = L.polyline([], {color: 'red'}).addTo(map);
-const toLine = L.polyline([], {color: 'red'}).addTo(map);
+const toLine = L.polyline([], { color: 'red' }).addTo(map);
+let route;
 
 const defaultIcon = L.icon({
     iconUrl: 'assets/black-marker.png',
@@ -60,6 +61,7 @@ function openPopup({ latlng }, { name }) {
 }
 
 function handleSelection(point, reset = false) {
+    if(route) map.removeLayer(route);
     if (reset) {
         fromLine.setLatLngs([]);
         toLine.setLatLngs([]);
@@ -90,13 +92,29 @@ function calculateRoute() {
     if (!from || !to) {
         return window.alert("Selecione uma origem e um destino!")
     }
-    // TODO mostrar edges
+
+    const closestNodeFrom = graph.getClosestNode(from.pos).toString();
+    const closestNodeTo = graph.getClosestNode(to.pos).toString();
+    const res = graph.findShortestPath(closestNodeFrom, closestNodeTo)
+    const nodes = res.path.map(item => {
+        const pos = item.split(',');
+        return [Number(pos[0]), Number(pos[1])]
+    })
+    drawEdges(nodes);
+}
+
+function drawEdges(nodes) {
+    const edges = [];
+    for (let i = 0; i < nodes.length - 1; i++) {
+        edges.push([nodes[i], nodes[i+1]])
+    }
+    route = L.polyline(edges, {color: 'red'}).addTo(map);
 }
 
 function resetRoute() {
     to = null;
     from = null;
-    handleSelection(null, null, true);
+    handleSelection(null, true);
 }
 
 function setTexts() {
