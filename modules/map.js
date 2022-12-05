@@ -40,7 +40,7 @@ function loadMapImage() {
 }
 
 function loadMapData() {
-    map.setView([298, 262], 1);
+    map.setView([298, 190], 0);
     const { area, points } = mapData
     L.polygon(area, {color: 'yellow', fill: true}).addTo(map);
 
