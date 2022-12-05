@@ -5,23 +5,26 @@
 
 ## Alunos
 
-| Matrícula | Aluno                                             |
-| ---------- | ------------------------------------------------- |
-| 170144488  | [Henrique Melo](https://github.com/HenriqueAmorim20) |
-| 180122258  | [Igor Queiroz Lima](https://github.com/igorq937)     |
+| Matrícula | Aluno                                                |
+| --------- | ---------------------------------------------------- |
+| 170144488 | [Henrique Melo](https://github.com/HenriqueAmorim20) |
+| 180122258 | [Igor Queiroz Lima](https://github.com/igorq937)     |
 
 ## Sobre
 
-Descreva os objetivos do seu projeto e como ele funciona.
+Se trata de uma área do mapa de Londres em 1961 do jogo GTA. Existem alguns pontos de interesse do jogo, que ao selecionar dois pontos, é possível traçar a menor rota.
 
 ## Screenshots
 
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+<img src="assets/print1.png" style="height: 300px;"/></br>
+<img src="assets/print2.png" style="height: 300px;"/></br>
+<img src="assets/print3.png" style="height: 300px;"/></br>
+
 
 ## Instalação
 
-**Linguagem**: JavaScript `<br>`
-**Framework**: [Leaflet](https://leafletjs.com/) (Biblioteca)`<br>`
+**Linguagem**: JavaScript </br>
+**Framework**: [Leaflet](https://leafletjs.com/) (Biblioteca)</br>
 Pode ser executado utilizando a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) do VSCode ou utilizando [http-server](https://github.com/http-party/http-server) que pode ser instalado com o comando ``npm install --global http-server``.
 
 ## Uso
@@ -34,6 +37,3 @@ Caso deseje usar http-server, basta utilizar o comando no diretório root do pro
 
 ***OBS:*** Utilizar apenas o navegador e executar o index.html não funcionará!
 
-## Outros
-
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
