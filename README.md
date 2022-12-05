@@ -1,7 +1,7 @@
 # GTA London 1961 Map
 
-**Número da Lista**: 36 `<br>`
-**Conteúdo da Disciplina**: Grafos 2 `<br>`
+**Número da Lista**: 36 </br>
+**Conteúdo da Disciplina**: Grafos 2 </br>
 
 ## Alunos
 
