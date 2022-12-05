@@ -96,7 +96,6 @@ body {
 #map {
     width: 60%;
     height: 100%;
-    max-height: 758px;
     background-color: #98CAFD;
     border: 1px solid white;
 }

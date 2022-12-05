@@ -3,7 +3,11 @@ import * as graph from './graph.js';
 
 const width = 762;
 const height = 758;
-const map = L.map('map', { crs: L.CRS.Simple });
+const map = L.map('map', {
+    crs: L.CRS.Simple,
+    minZoom: 0,
+    maxZoom: 1
+});
 const bounds = [[0, 0], [width, height]];
 
 let from;
@@ -36,6 +40,7 @@ function loadMapImage() {
 }
 
 function loadMapData() {
+    map.setView([298, 262], 1);
     const { area, points } = mapData
     L.polygon(area, {color: 'yellow', fill: true}).addTo(map);
 
