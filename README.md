@@ -1,7 +1,7 @@
 # GTA London 1961 Map
 
-**Número da Lista**: 36 `</br>`
-**Conteúdo da Disciplina**: Grafos 2 `</br>`
+**Número da Lista**: 36</br>
+**Conteúdo da Disciplina**: Grafos 2</br>
 
 ## Alunos
 
@@ -26,8 +26,8 @@ https://github.com/projeto-de-algoritmos/Grafos2_GTA-London-1961-Map/blob/master
 
 ## Instalação
 
-**Linguagem**: JavaScript `</br>`
-**Framework**: [Leaflet](https://leafletjs.com/) (Biblioteca)`</br>`
+**Linguagem**: JavaScript</br>
+**Framework**: [Leaflet](https://leafletjs.com/) (Biblioteca)</br>
 Pode ser executado utilizando a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) do VSCode ou utilizando [http-server](https://github.com/http-party/http-server) que pode ser instalado com o comando ``npm install --global http-server``.
 
 ## Uso
