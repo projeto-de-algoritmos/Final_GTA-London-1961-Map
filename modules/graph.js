@@ -1,23 +1,21 @@
 import mapData from './mapData.js';
 
-const adjacentList = new Map();
-
+const adjacentList = {};
 
 export function init() {
     loadGraphData();
 }
 
-export function addNode(node) {
-    adjacentList.set(node.toString(), []);
+function addNode(node) {
+    adjacentList[node.toString()] = {};
 }
 
-export function addEdge([source, target]) {
-    adjacentList.get(source.toString()).push(target);
-    adjacentList.get(target.toString()).push(source);
-}
-
-export function getAdjacentNodes(node) {
-    return adjacentList.get(node.toString());
+function addEdge([source, target]) {
+    const [sx, sy] = source;
+    const [tx, ty] = target;
+    const distance = Math.abs(sx - tx) + Math.abs(sy - ty);
+    adjacentList[source.toString()][target.toString()] = distance;
+    adjacentList[target.toString()][source.toString()] = distance;
 }
 
 export function getClosestNode([ x, y ]) {
@@ -44,7 +42,7 @@ function loadGraphData() {
 }
 
 export function findShortestPath(startNode, endNode) {
-    const graph = formatList();
+    const graph = adjacentList;
     let distances = {};
     distances[endNode] = "Infinity";
     distances = Object.assign(distances, graph[startNode]);
@@ -88,9 +86,8 @@ export function findShortestPath(startNode, endNode) {
         distance: distances[endNode],
         path: shortestPath,
     };
-   return results;
+    return results;
 };
-
 
 function shortestDistanceNode(distances, visited) {
     let shortest = null;
@@ -102,21 +99,3 @@ function shortestDistanceNode(distances, visited) {
 
 	return shortest;
 };
-
-
-function formatList() {
-    const res = {};
-    for (let [key, values] of adjacentList) {
-        res[key] = {};
-        values.forEach(value => {
-            res[key][value] = calculateDistance(key, value.toString());
-        });
-    }
-    return res
-};
-
-function calculateDistance(initPos, targetPos) {
-    const [x1, y1] = initPos.split(',');
-    const [x2, y2] = targetPos.split(',');
-    return Math.abs(x1 - x2) + Math.abs(y1 - y2);
-}
