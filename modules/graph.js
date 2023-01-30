@@ -1,4 +1,5 @@
 import mapData from './mapData.js';
+import PriorityQueue from './PriorityQueue.js';
 
 const adjacentList = {};
 
@@ -41,53 +42,64 @@ function loadGraphData() {
     edges.forEach(edge => addEdge(edge))
 }
 
-export function findShortestPath(startNode, endNode) {
+export function dijkstra(startNode, endNode) {
     const graph = adjacentList;
-    let distances = {};
-    distances[endNode] = "Infinity";
-    distances = Object.assign(distances, graph[startNode]);
+    const queue = new PriorityQueue();
+    const visited = {};
 
-    let parents = { endNode: null };
-    for (let child in graph[startNode]) {
-        parents[child] = startNode;
+    const shortestPaths = {};
+    const shortestPathsAdd = (node, prev, distance) => {
+        const [px, py] = prev.split(',');
+        shortestPaths[node] = {};
+        shortestPaths[node].prev = [parseInt(px), parseInt(py)];
+        shortestPaths[node].distance = distance;
     }
+    
+    visited[startNode] = true;
+    shortestPathsAdd(startNode, startNode, 0);
+    queue.enqueue(startNode, 0);
+    
+    while (!queue.isEmpty()) {
+        const currentNode = queue.dequeue().value;
+        for (let neighbor in graph[currentNode]) {
+            const distance = shortestPaths[currentNode].distance + graph[currentNode][neighbor];
 
-    let visited = [];
-    let node = shortestDistanceNode(distances, visited);
-
-    while (node) {
-        let distance = distances[node];
-        let children = graph[node];
-
-        for (let child in children) {
-            if (String(child) === String(startNode)) {
-                continue;
-            } else {
-                let newdistance = distance + children[child];
-                if (!distances[child] || distances[child] > newdistance) {
-                    distances[child] = newdistance;
-                    parents[child] = node;
+            if (neighbor === endNode) {
+                shortestPathsAdd(neighbor, currentNode, distance);
+                return shortestPaths;
+            };
+           
+            if (!shortestPaths[neighbor] || distance < shortestPaths[neighbor].distance) {
+                const [nx, ny] = neighbor.split(',');
+                const [cx, cy] = currentNode.split(',');
+                const [px, py] = shortestPaths[currentNode].prev;
+                
+                if ((parseInt(cx) - px === 0 && parseInt(nx) - parseInt(cx) === 0) 
+                || (parseInt(cy) - py === 0 && parseInt(ny) - parseInt(cy) === 0)) {
+                    shortestPathsAdd(neighbor, currentNode, distance);
+                    queue.enqueue(neighbor, distance);
+                }else {
+                    shortestPathsAdd(neighbor, currentNode, distance+1);
+                    queue.enqueue(neighbor, distance+1);
                 }
             }
         }
-        visited.push(node);
-        node = shortestDistanceNode(distances, visited);
+    }
+}
+
+export function shortestPaths2Nodes(shortestPaths, startNode, endNode) {
+    const [ex, ey] = endNode.split(',');
+    const [sx, sy] = startNode.split(',');
+    let initialNode = [parseInt(ex), parseInt(ey)];
+    const nodes = [[parseInt(ex), parseInt(ey)]];
+
+    while(initialNode.toString() !== [parseInt(sx), parseInt(sy)].toString()) {
+        nodes.push(shortestPaths[initialNode].prev);
+        initialNode = shortestPaths[initialNode].prev;
     }
 
-    let shortestPath = [endNode];
-    let parent = parents[endNode];
-    while (parent) {
-        shortestPath.push(parent);
-        parent = parents[parent];
-    }
-    shortestPath.reverse();
-
-    let results = {
-        distance: distances[endNode],
-        path: shortestPath,
-    };
-    return results;
-};
+    return nodes;
+}
 
 function shortestDistanceNode(distances, visited) {
     let shortest = null;

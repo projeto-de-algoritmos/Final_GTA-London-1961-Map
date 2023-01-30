@@ -41,8 +41,10 @@ function loadMapImage() {
 
 function loadMapData() {
     map.setView([298, 190], 0);
-    const { area, points } = mapData
-    L.polygon(area, {color: 'yellow', fill: true}).addTo(map);
+
+    const { points, nodes, edges } = mapData
+
+    L.polyline(edges, { color: 'yellow' }).addTo(map);
 
     points.forEach(point => {
         point.marker = L.marker(point.pos).setIcon(defaultIcon).addTo(map);
@@ -94,12 +96,9 @@ function calculateRoute() {
 
     const closestNodeFrom = graph.getClosestNode(from.pos).toString();
     const closestNodeTo = graph.getClosestNode(to.pos).toString();
-    const res = graph.findShortestPath(closestNodeFrom, closestNodeTo)
-    const nodes = res.path.map(item => {
-        const pos = item.split(',');
-        return [Number(pos[0]), Number(pos[1])]
-    })
-    drawEdges(nodes);
+    const result = graph.dijkstra(closestNodeFrom, closestNodeTo);
+
+    drawEdges(graph.shortestPaths2Nodes(result, closestNodeFrom, closestNodeTo));
 }
 
 function drawEdges(nodes) {
