@@ -1,7 +1,7 @@
 # GTA London 1961 Map
 
 **Número da Lista**: 36</br>
-**Conteúdo da Disciplina**: Grafos 2</br>
+**Conteúdo da Disciplina**: Final</br>
 
 ## Alunos
 
@@ -12,11 +12,11 @@
 
 ## Sobre
 
-Se trata de uma área do mapa de Londres em 1961 do jogo GTA. Existem alguns pontos de interesse do jogo, que ao selecionar dois pontos, é possível traçar a menor rota.
+Se trata de uma área do mapa de Londres em 1961 do jogo GTA. Existem alguns pontos de interesse do jogo, que ao selecionar dois pontos, é possível traçar a menor rota com a menor quantidade de curvas.
 
 ## Apresentação
 
-https://github.com/projeto-de-algoritmos/Grafos2_GTA-London-1961-Map/blob/master/video.mp4
+https://github.com/projeto-de-algoritmos/Final_GTA-London-1961-Map/blob/master/video.mp4
 
 ## Screenshots
 
@@ -32,7 +32,7 @@ Pode ser executado utilizando a extensão [Live Server](https://marketplace.visu
 
 ## Uso
 
-Para utilizar sem nenhuma instalação acesse https://projeto-de-algoritmos.github.io/Grafos2_GTA-London-1961-Map;
+Para utilizar sem nenhuma instalação acesse https://projeto-de-algoritmos.github.io/Final_GTA-London-1961-Map;
 
 Caso deseje usar a exetensão Live Server do VSCode, abra o arquivo ``index.html`` com a extensão;
 
